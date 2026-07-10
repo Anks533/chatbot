@@ -8,7 +8,7 @@ _GEMINI_DIM = 3072
 _FALLBACK_DIM = 768  # all-mpnet-base-v2
 
 _active_model = None
-_model_type: str | None = None  # "gemini" or "fallback"
+_model_type = "gemini"  # "gemini" or "fallback"
 
 
 # ── Model initialisation ───────────────────────────────────────────────────────
@@ -40,13 +40,13 @@ def _init():
     if _active_model is not None:
         return
 
-    gemini = _probe_gemini()
-    if gemini:
-        _active_model = gemini
-        _model_type = "gemini"
-    else:
-        _active_model = _load_fallback()
-        _model_type = "fallback"
+    #gemini = _probe_gemini()
+    #if gemini:
+    #    _active_model = gemini
+    #    _model_type = "gemini"
+    #else:
+    _active_model = _load_fallback()
+    _model_type = "fallback"
 
 
 # ── Public helpers ─────────────────────────────────────────────────────────────

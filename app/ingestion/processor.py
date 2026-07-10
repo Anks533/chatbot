@@ -90,7 +90,7 @@ def process_file(file_path: str, filename: str, source_type: str):
                 ]
 
                 qdrant_client.upsert(
-                    collection_name=settings.QDRANT_COLLECTION,
+                    collection_name=settings.QDRANT_COLLECTION_NAME,
                     points=points,
                 )
                 logfire.info(f"Indexed {len(points)} points to Qdrant from {filename}.")
@@ -118,22 +118,22 @@ def run_universal_ingestion(base_dir: str, explicit_source_type: str = None, wip
         # Wipe collection if requested
         if wipe:
             with logfire.span("Wiping Collection"):
-                if qdrant_client.collection_exists(settings.QDRANT_COLLECTION):
-                    qdrant_client.delete_collection(settings.QDRANT_COLLECTION)
-                    logfire.info(f"Collection '{settings.QDRANT_COLLECTION}' deleted.")
+                if qdrant_client.collection_exists(settings.QDRANT_COLLECTION_NAME):
+                    qdrant_client.delete_collection(settings.QDRANT_COLLECTION_NAME)
+                    logfire.info(f"Collection '{settings.QDRANT_COLLECTION_NAME}' deleted.")
 
         # Recreate collection — dimension resolved at runtime after embedding model probe
-        if not qdrant_client.collection_exists(settings.QDRANT_COLLECTION):
+        if not qdrant_client.collection_exists(settings.QDRANT_COLLECTION_NAME):
             dim = get_embedding_dim()
             qdrant_client.create_collection(
-                collection_name=settings.QDRANT_COLLECTION,
+                collection_name=settings.QDRANT_COLLECTION_NAME,
                 vectors_config=models.VectorParams(
                     size=dim,
                     distance=models.Distance.COSINE,
                 ),
             )
             logfire.info(
-                f"Created collection '{settings.QDRANT_COLLECTION}' "
+                f"Created collection '{settings.QDRANT_COLLECTION_NAME}' "
                 f"({dim}-dim, Cosine)."
             )
 
