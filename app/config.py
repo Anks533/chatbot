@@ -16,9 +16,8 @@ class Settings:
 
      # --- LLM GATEWAY (PORTKEY) ---
     PORTKEY_API_KEY = os.getenv("PORTKEY_API_KEY")
-    
-    GROQ_SLUG =  "rag"     # primary: @rag/llama-3.1-70b-versatile
-    GROQ_SLUG_2 = "brag"  # fallback: @brag/llama-3.1-8b-instant
+    PORTKEY_CONFIG = "pc-pc-gat-9742bb"
+    GROQ_SLUG = "rag"
 
     
     # --- OBSERVABILITY ---
